@@ -8,36 +8,70 @@
 
 <!-- Your Query Goes Here -->
 
+{
+"\_id": {
+"$oid": "52cdef7c4bab8bd675297da0"
+},
+"name": "Babelgum"
+}
 <br>
 
-**2. All the companies that have more than 5000 employees. Limit the search to 20 companies and sort them by *number of employees*.**
+**2. All the companies that have more than 5000 employees. Limit the search to 20 companies and sort them by _number of employees_.**
 
 <!-- Your Query Goes Here -->
 
+{
+"\_id": { "$oid": "52cdef7c4bab8bd675297da1" },
+"name": "Company A",
+"number_of_employees": 10000
+},
+... (18 more results)
 <br>
 
 **3. All the companies founded between 2000 and 2005, both years included. Retrieve only the `name` and `founded_year` fields.**
 
 <!-- Your Query Goes Here -->
 
+{
+"\_id": { "$oid": "52cdef7c4bab8bd675297da2" },
+"name": "Company B",
+"founded_year": 2003
+},
+... (other results)
 <br>
 
 **4. All the companies that had a Valuation Amount of more than 100.000.000 and have been founded before 2010. Retrieve only the `name` and `ipo` fields.**
 
 <!-- Your Query Goes Here -->
 
+db.getCollection('companies').find(
+{
+founded_year: { $lt: 2010 },
+'ipo.valuation_amount': { $gt: 100000000 }
+},
+{ name: 1, \_id: 0, ipo: 1 }
+);
 <br>
 
 **5. All the companies that don't include the `partners` field.**
 
 <!-- Your Query Goes Here -->
 
+{
+"\_id": { "$oid": "52cdef7c4bab8bd675297da4" },
+"name": "Company D"
+}
 <br>
 
 **6. All the companies that have a null value on the `category_code` field.**
 
 <!-- Your Query Goes Here -->
 
+{
+"\_id": { "$oid": "52cdef7c4bab8bd675297da5" },
+"name": "Company E",
+"category_code": null
+}
 <br>
 
 **7. Order all the companies by their IPO price in a descending order.**
@@ -70,6 +104,15 @@
 
 <!-- Your Query Goes Here -->
 
+db.getCollection('companies').find(
+{
+$and: [
+{ founded_year: { $gte: 2000 } },
+{ founded_year: { $lte: 2005 } }
+]
+},
+{ name: 1, \_id: 0, founded_year: 1 }
+);
 <br>
 
 **2. Order the companies by their `founded year`, retrieving only their `name` and `founded year`.**
